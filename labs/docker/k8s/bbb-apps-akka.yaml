@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bbb-apps-akka
+    version: latest
+  name: bbb-apps-akka
+  namespace: bigbluebutton
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bbb-apps-akka
+      version: latest
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: bbb-apps-akka
+        version: latest
+      name: bbb-apps-akka
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTS
+          value: -Dredis.host=redis
+        image: hoang000147/bbb-apps-akka:latest
+        imagePullPolicy: Always
+        name: bbb-apps-akka
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+#      nodeSelector:
+#        role: 'bigbluebutton'
+#      tolerations:
+#      - key: role
+#        operator: Equal
+#        value: 'bigbluebutton'
+#        effect: NoSchedule

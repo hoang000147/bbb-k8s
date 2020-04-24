@@ -28,7 +28,7 @@ spec:
       - env:
         - name: STUN_IP
         # TODO: how to get this IP?
-          value: "127"
+          value: "127.0.0.1"
         - name: STUN_PORT
           value: "3478"
         image: hoang000147/bbb-kurento:latest
@@ -39,8 +39,8 @@ spec:
           protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-#      nodeSelector:
-#        role: 'bigbluebutton'
+      nodeSelector:
+        bbb: bigbluebutton
 #      tolerations:
 #      - key: role
 #        operator: Equal
@@ -62,8 +62,6 @@ spec:
     port: 8888
   selector:
     app: bbb-kurento
-
-
-    # volumes:
-    #   - media-video:/var/kurento/recordings
-    #   - media-screenshare:/var/kurento/screenshare
+#  volumes:
+#    - media-video:/var/kurento/recordings
+#    - media-screenshare:/var/kurento/screenshare

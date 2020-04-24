@@ -27,7 +27,7 @@ spec:
       containers:
       - env:
         - name: MONGO_URL
-          value: mongodb://mongo:27017/
+          value: mongodb://mongo:27017/html5client
         - name: MONGO_DB
           value: bbbhtml5
         - name: METEOR_SETTINGS_MODIFIER
@@ -44,8 +44,8 @@ spec:
           protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-#      nodeSelector:
-#        role: 'bigbluebutton'
+      nodeSelector:
+        bbb: bigbluebutton
 #      tolerations:
 #      - key: role
 #        operator: Equal

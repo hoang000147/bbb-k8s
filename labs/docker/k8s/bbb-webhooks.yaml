@@ -31,7 +31,7 @@ spec:
         - name: SHARED_SECRET
           value: "12345"
         - name: SERVER_DOMAIN
-          value: hadtechbbb.cf
+          value: hadtechbbb.ga
         - name: BEARER_AUTH
           value: "1"
         image: hoang000147/bbb-webhooks:latest
@@ -42,8 +42,8 @@ spec:
           protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-#      nodeSelector:
-#        role: 'bigbluebutton'
+      nodeSelector:
+        testing: bigbluebutton
 #     tolerations:
 #      - key: role
 #        operator: Equal

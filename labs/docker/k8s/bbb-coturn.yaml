@@ -29,11 +29,11 @@ spec:
         - name: PORT
           value: "3478"
         - name: SERVER_DOMAIN
-          value: hadtechbbb.cf
+          value: hadtechbbb.ga
         - name: SECRET
           value: "54321"
         - name: EXTERNAL_IP
-          value: "112.137.141.18"
+          value: "127.0.0.1"
         - name: ENABLE_REST_API
           value: "1"
         image: hoang000147/bbb-coturn:latest
@@ -46,8 +46,8 @@ spec:
           protocol: UDP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-#      nodeSelector:
-#        role: 'bigbluebutton'
+      nodeSelector:
+        bbb: bigbluebutton
 #      tolerations:
 #      - key: role
 #        operator: Equal

@@ -34,8 +34,8 @@ spec:
         command: ["wait-for-it.sh", "bbb-freeswitch:8021", "--timeout=60", "--strict", "--", "/usr/share/bbb-fsesl-akka/bin/bbb-fsesl-akka"]
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-#      nodeSelector:
-#        role: 'bigbluebutton'
+      nodeSelector:
+        bbb: bigbluebutton
 #      tolerations:
 #      - key: role
 #        operator: Equal

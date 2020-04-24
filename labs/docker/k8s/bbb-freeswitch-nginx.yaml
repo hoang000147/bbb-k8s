@@ -27,7 +27,7 @@ spec:
       containers:
       - env:
         - name: SERVER_DOMAIN
-          value: hadtechbbb.cf
+          value: hadtechbbb.ga
         image: hoang000147/bbb-nginx:latest
         imagePullPolicy: Always
         name: bbb-freeswitch-nginx
@@ -36,8 +36,8 @@ spec:
           protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-#      nodeSelector:
-#        role: 'bigbluebutton'
+      nodeSelector:
+        bbb: bigbluebutton
 #      tolerations:
 #      - key: role
 #        operator: Equal
@@ -53,6 +53,7 @@ metadata:
   annotations:
     traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
 spec:
+#  type: NodePort
   ports:
   - name: http
     targetPort: 80

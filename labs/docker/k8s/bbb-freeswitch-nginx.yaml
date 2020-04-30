@@ -53,12 +53,12 @@ metadata:
   annotations:
     traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
 spec:
-#  type: NodePort
+  type: NodePort
   ports:
   - name: http
     targetPort: 80
     port: 80
-#    nodePort: 31111
+    nodePort: 31111
   selector:
     app: bbb-freeswitch-nginx
 

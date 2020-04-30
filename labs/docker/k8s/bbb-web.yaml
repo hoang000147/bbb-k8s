@@ -34,6 +34,8 @@ spec:
           value: "54321"
         - name: TURN_DOMAIN
           value: hadtechbbb.ga
+        - name: REDIS_HOST
+          value: redis
         image: hoang000147/bbb-web:latest
         imagePullPolicy: Always
         name: bbb-web

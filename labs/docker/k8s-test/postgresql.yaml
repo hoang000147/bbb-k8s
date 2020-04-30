@@ -1,0 +1,43 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: bigbluebutton
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:9.5
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: postgres
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: "bbb-postgresql"
+      volumes:
+        - hostPath:
+            path: "/home/docker/pgdata"
+          name: bbb-postgresql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: bigbluebutton
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+  selector:
+    service: postgres

@@ -2,15 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: bbb-html5
+    app: bbb-freeswitch-nginx
     version: latest
-  name: bbb-html5
+  name: bbb-freeswitch-nginx
   namespace: bigbluebutton
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bbb-html5
+      app: bbb-freeswitch-nginx
       version: latest
   strategy:
     rollingUpdate:
@@ -20,27 +20,19 @@ spec:
   template:
     metadata:
       labels:
-        app: bbb-html5
+        app: bbb-freeswitch-nginx
         version: latest
-      name: bbb-html5
+      name: bbb-freeswitch-nginx
     spec:
       containers:
       - env:
-        - name: MONGO_URL
-          value: mongodb://mongo:27017/html5client
-        - name: MONGO_DB
-          value: bbbhtml5
-        - name: METEOR_SETTINGS_MODIFIER
-          value: ".public.kurento.wsUrl = \"wss://bigbluebutton.rocket.chat/bbb-webrtc-sfu\" | .public.kurento.enableVideo = true | .public.kurento.enableScreensharing = true | .public.kurento.enableVideoStats = true | .public.kurento.enableListenOnly = true"
-        - name: REDIS_HOST
-          value: redis
-        - name: ROOT_URL
-          value: http://127.0.0.1/html5client
-        image: hoang000147/bbb-html5:latest
+        - name: SERVER_DOMAIN
+          value: hadtechbbb.ga
+        image: hoang000147/bbb-nginx:latest
         imagePullPolicy: Always
-        name: bbb-html5
+        name: bbb-freeswitch-nginx
         ports:
-        - containerPort: 3000
+        - containerPort: 80
           protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
@@ -56,22 +48,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bbb-html5
+  name: bbb-freeswitch-nginx
   namespace: bigbluebutton
-#  annotations:
-#    traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
+  annotations:
+    traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
 spec:
+ NodePort
   ports:
   - name: http
-    targetPort: 3000
-    port: 3000
+    targetPort: 80
+    port: 80
+    nodePort: 31111
   selector:
-    app: bbb-html5
+    app: bbb-freeswitch-nginx
+
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: bbb-html5-secret
+  name: bbb-freeswitch-nginx-secret
 type: Opaque
 data:
   tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURMakNDQWhZQ0NRREFPRjl0THNhWFdqQU5CZ2txaGtpRzl3MEJBUXNGQURCYU1Rc3dDUVlEVlFRR0V3SlYKVXpFTE1Ba0dBMVVFQ0F3Q1EwRXhJVEFmQmdOVkJBb01HRWx1ZEdWeWJtVjBJRmRwWkdkcGRITWdVSFI1SUV4MApaREViTUJrR0ExVUVBd3dTWTJGbVpTNWxlR0Z0Y0d4bExtTnZiU0FnTUI0WERURTRNRGt4TWpFMk1UVXpOVm9YCkRUSXpNRGt4TVRFMk1UVXpOVm93V0RFTE1Ba0dBMVVFQmhNQ1ZWTXhDekFKQmdOVkJBZ01Ba05CTVNFd0h3WUQKVlFRS0RCaEpiblJsY201bGRDQlhhV1JuYVhSeklGQjBlU0JNZEdReEdUQVhCZ05WQkFNTUVHTmhabVV1WlhoaApiWEJzWlM1amIyMHdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDcDZLbjdzeTgxCnAwanVKL2N5ayt2Q0FtbHNmanRGTTJtdVpOSzBLdGVjcUcyZmpXUWI1NXhRMVlGQTJYT1N3SEFZdlNkd0kyaloKcnVXOHFYWENMMnJiNENaQ0Z4d3BWRUNyY3hkam0zdGVWaVJYVnNZSW1tSkhQUFN5UWdwaW9iczl4N0RsTGM2SQpCQTBaalVPeWwwUHFHOVNKZXhNVjczV0lJYTVyRFZTRjJyNGtTa2JBajREY2o3TFhlRmxWWEgySTVYd1hDcHRDCm42N0pDZzQyZitrOHdnemNSVnA4WFprWldaVmp3cTlSVUtEWG1GQjJZeU4xWEVXZFowZXdSdUtZVUpsc202OTIKc2tPcktRajB2a29QbjQxRUUvK1RhVkVwcUxUUm9VWTNyemc3RGtkemZkQml6Rk8yZHNQTkZ4MkNXMGpYa05MdgpLbzI1Q1pyT2hYQUhBZ01CQUFFd0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFLSEZDY3lPalp2b0hzd1VCTWRMClJkSEliMzgzcFdGeW5acS9MdVVvdnNWQTU4QjBDZzdCRWZ5NXZXVlZycTVSSWt2NGxaODFOMjl4MjFkMUpINnIKalNuUXgrRFhDTy9USkVWNWxTQ1VwSUd6RVVZYVVQZ1J5anNNL05VZENKOHVIVmhaSitTNkZBK0NuT0Q5cm4yaQpaQmVQQ0k1ckh3RVh3bm5sOHl3aWozdnZRNXpISXV5QmdsV3IvUXl1aTlmalBwd1dVdlVtNG52NVNNRzl6Q1Y3ClBwdXd2dWF0cWpPMTIwOEJqZkUvY1pISWc4SHc5bXZXOXg5QytJUU1JTURFN2IvZzZPY0s3TEdUTHdsRnh2QTgKN1dqRWVxdW5heUlwaE1oS1JYVmYxTjM0OWVOOThFejM4Zk9USFRQYmRKakZBL1BjQytHeW1lK2lHdDVPUWRGaAp5UkU9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
@@ -80,7 +75,7 @@ data:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: bbb-html5-ingress
+  name: bbb-freeswitch-nginx-ingress
   namespace: bigbluebutton
 #  annotations:
 #    kubernetes.io/ingress.class: "traefik"
@@ -89,12 +84,7 @@ spec:
   - host: hadtechbbb.ga
     http:
       paths:
-      - path: /html5client
+      - path: /ws
         backend:
-          serviceName: bbb-html5
-          servicePort: 3000
-      - path: /_timesync
-        backend:
-          serviceName: bbb-html5
-          servicePort: 3000
-
+          serviceName: bbb-freeswitch-nginx
+          servicePort: 80

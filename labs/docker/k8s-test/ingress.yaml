@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: bbb-ingress
+  namespace: bigbluebutton
+spec:
+  tls:
+  - hosts:
+    - hadtechbbb.ga
+    secretName: bbb-secret
+  rules:
+  - host: hadtechbbb.ga
+    http:
+      paths:
+      - path: /bigbluebutton
+        backend:
+          serviceName: bbb-web
+          servicePort: 8090
+      - path: /bigbluebutton/api/hooks
+        backend:
+          serviceName: bbb-webhooks
+          servicePort: 3005
+      - path: /html5client
+        backend:
+          serviceName: bbb-html5
+          servicePort: 3000
+      - path: /_timesync
+        backend:
+          serviceName: bbb-html5
+          servicePort: 3000
+      - path: /b
+        backend:
+          serviceName: bbb-greenlight
+          servicePort: 80
+      - path: /bbb-webrtc-sfu
+        backend:
+          serviceName: bbb-webrtc-sfu
+          servicePort: 3008

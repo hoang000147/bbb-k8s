@@ -28,10 +28,10 @@ spec:
       - env:
         - name: STUN_IP
         # TODO: how to get this IP?
-          value: "203.162.10.115"
+          value: "74.125.23.127"
         - name: STUN_PORT
           value: "3478"
-        image: hoang000147/bbb-kurento:latest
+        image: hoang000147/bbb-kurento:2.0
         imagePullPolicy: Always
         name: bbb-kurento
         ports:

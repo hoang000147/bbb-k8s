@@ -27,7 +27,7 @@ spec:
       containers:
       - env:
         - name: KURENTO_NAME
-          value: kurento
+          value: bbb-kurento
         - name: KURENTO_URL
           value: ws://bbb-kurento:8888/kurento
         - name: REDIS_HOST
@@ -68,20 +68,20 @@ spec:
   selector:
     app: bbb-webrtc-sfu
 
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: bbb-webrtc-sfu-ingress
-  namespace: bigbluebutton
+#---
+#apiVersion: networking.k8s.io/v1beta1
+#kind: Ingress
+#metadata:
+#  name: bbb-webrtc-sfu-ingress
+#  namespace: bigbluebutton
 #  annotations:
 #    kubernetes.io/ingress.class: "traefik"
-spec:
-  rules:
-  - host: hadtechbbb.ga
-    http:
-      paths:
-      - path: /bbb-webrtc-sfu
-        backend:
-          serviceName: bbb-webrtc-sfu
-          servicePort: 3008
+#spec:
+#  rules:
+#  - host: hadtechbbb.ga
+#    http:
+#      paths:
+#      - path: /bbb-webrtc-sfu
+#        backend:
+#          serviceName: bbb-webrtc-sfu
+#          servicePort: 3008

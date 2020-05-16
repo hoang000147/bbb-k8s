@@ -213,8 +213,8 @@ spec:
           containerPort: 443
           hostPort: 443
         - name: bbb
-          containerPort: 8080
-          hostPort: 8080
+          containerPort: 8090
+          hostPort: 8090
        #- name: prometheus
          #containerPort: 9113
         securityContext:
@@ -261,7 +261,7 @@ spec:
     protocol: TCP
     name: https
   - port: 8080
-    targetPort: 8080
+    targetPort: 8090
     protocol: TCP
     name: bbb
   selector:

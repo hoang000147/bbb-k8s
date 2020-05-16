@@ -28,7 +28,7 @@ spec:
       - env:
         - name: JAVA_OPTS
           value: -Dredis.host=redis
-        image: hoang000147/bbb-apps-akka:latest
+        image: hoang000147/bbb-apps-akka:2.0
         imagePullPolicy: Always
         name: bbb-apps-akka
         ports:

@@ -31,7 +31,7 @@ spec:
         - name: SERVER_DOMAIN
           value: hadtechbbb.ga
         - name: SECRET
-          value: "54321"
+          value: "5125957400d66a46e8bb3146211a265f"
         - name: EXTERNAL_IP
           value: "127.0.0.1"
         - name: ENABLE_REST_API

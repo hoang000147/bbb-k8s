@@ -1,16 +1,16 @@
-apiVersion: apps/v1
+.wwwapiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: bbb-coturn
+    app: bbb-freeswitch
     version: latest
-  name: bbb-coturn
+  name: bbb-freeswitch
   namespace: bigbluebutton
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bbb-coturn
+      app: bbb-freeswitch
       version: latest
   strategy:
     rollingUpdate:
@@ -20,30 +20,19 @@ spec:
   template:
     metadata:
       labels:
-        app: bbb-coturn
+        app: bbb-freeswitch
         version: latest
-      name: bbb-coturn
+      name: bbb-freeswitch
     spec:
       containers:
-      - env:
-        - name: PORT
-          value: "3478"
-        - name: SERVER_DOMAIN
-          value: hadtech3b.gq
-        - name: SECRET
-          value: "5125957400d66a46e8bb3146211a265f"
-        - name: EXTERNAL_IP
-          value: "45.64.126.93"
-        - name: ENABLE_REST_API
-          value: "1"
-        image: hoang000147/bbb-coturn:latest
+      - image: hoang000147/bbb-freeswitch
         imagePullPolicy: Always
-        name: bbb-coturn
+        name: bbb-freeswitch
         ports:
-        - containerPort: 3478
+        - containerPort: 7443
           protocol: TCP
-        - containerPort: 3478
-          protocol: UDP
+        - containerPort: 8021
+          protocol: TCP
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       nodeSelector:
@@ -58,14 +47,17 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: bbb-coturn
+  name: bbb-freeswitch
   namespace: bigbluebutton
 #  annotations:
 #    traefik.backend.circuitbreaker: "NetworkErrorRatio() > 0.5"
 spec:
   ports:
   - name: http
-    targetPort: 3478
-    port: 3478
+    targetPort: 7443
+    port: 7443
+  - name: freeswitch-8021
+    targetPort: 8021
+    port: 8021
   selector:
-    app: bbb-coturn
+    app: bbb-freeswitch

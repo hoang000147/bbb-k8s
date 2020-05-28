@@ -31,7 +31,7 @@ spec:
         - name: SHARED_SECRET
           value: "db72992edcee72c894ad97a68b0f8d51"
         - name: SERVER_DOMAIN
-          value: hadtechbbb.ga
+          value: hadtech3b.gq
         - name: BEARER_AUTH
           value: "1"
         image: hoang000147/bbb-webhooks:latest
@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       nodeSelector:
-        testing: bigbluebutton
+        bbb: bigbluebutton
 #     tolerations:
 #      - key: role
 #        operator: Equal

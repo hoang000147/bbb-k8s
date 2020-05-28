@@ -27,15 +27,15 @@ spec:
       containers:
       - env:
         - name: SERVER_DOMAIN
-          value: hadtechbbb.ga
+          value: hadtech3b.gq
         - name: SHARED_SECRET
           value: "db72992edcee72c894ad97a68b0f8d51"
         - name: TURN_SECRET
           value: "5125957400d66a46e8bb3146211a265f"
         - name: TURN_DOMAIN
-          value: hadtechbbb.ga
-        - name: JAVA_OPTS
-          value: -Dredis.host=redis -DredisStorageService=redis
+          value: hadtech3b.gq
+#        - name: JAVA_OPTS
+#          value: -Dredis.host=redis -DredisStorageService=redis
         image: hoang000147/bbb-web:2.0
         imagePullPolicy: Always
         name: bbb-web

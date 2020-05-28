@@ -22,7 +22,7 @@ spec:
       labels:
         app: bbb-greenlight
         version: latest
-      name: bbb-web
+      name: bbb-greenlight
     spec:
       containers:
       - envFrom:
@@ -45,7 +45,7 @@ spec:
 #          value: postgres
 #        - name: POSTGRES_PASSWORD
 #          value: password
-        image: hoang000147/greenlight:v2-k8s-1.0
+        image: hoang000147/greenlight:v2-alpha-1.1.5
         imagePullPolicy: Always
         name: bbb-greenlight
         ports:

@@ -1,0 +1,51 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: greenlight-virtualserver
+  namespace: bigbluebutton
+spec:
+  host: hadtech3b.gq
+  tls:
+    secret: bbb-secret-customer
+#    enable: false
+  upstreams:
+  - name: greenlight
+    service: bbb-greenlight
+    port: 80
+#  - name: coffee
+#    service: coffee-svc
+#    port: 80
+  - name: web
+    service: bbb-web
+    port: 8090
+  - name: webhooks
+    service: bbb-webhooks
+    port: 3005
+  - name: html5
+    service: bbb-html5
+    port: 3000
+  - name: webrtc-sfu
+    service: bbb-webrtc-sfu
+    port: 3008 
+  routes:
+  - path: /b
+    action:
+      pass: greenlight
+#  - path: /coffee
+#    action:
+#      pass: coffee
+  - path: /bigbluebutton
+    action:
+      pass: web
+  - path: /bigbluebutton/api/hooks
+    action:
+      pass: webhooks
+  - path: /html5client
+    action:
+      pass: html5
+  - path: /_timesync
+    action:
+      pass: html5
+  - path: /bbb-webrtc-sfu
+    action:
+      pass: webrtc-sfu

@@ -1,0 +1,25 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: greenlight-virtualserver
+  namespace: bigbluebutton
+spec:
+  host: hadtechbbb.gq
+  tls:
+    secret: bbb-secret-customer
+#    enable: false
+  upstreams:
+  - name: greenlight
+    service: bbb-greenlight
+    port: 80
+#  - name: coffee
+#    service: coffee-svc
+#    port: 80
+  routes:
+  - path: /b
+    action:
+      pass: greenlight
+#  - path: /coffee
+#    action:
+#      pass: coffee
+

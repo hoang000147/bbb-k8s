@@ -29,14 +29,14 @@ spec:
         - name: KURENTO_NAME
           value: bbb-kurento
         - name: KURENTO_URL
-          value: ws://bbb-kurento:8888/kurento
+          value: ws://10.104.114.118:8888/kurento
         - name: REDIS_HOST
-          value: redis
+          value: 10.96.112.166
         - name: FREESWITCH_IP
-          value: bbb-freeswitch
+          value: 10.108.66.84
         - name: LOG_LEVEL
           value: debug
-        image: hoang000147/bbb-webrtc-sfu:latest
+        image: hoang000147/bbb-webrtc-sfu:2.1
         imagePullPolicy: Always
         name: bbb-webrtc-sfu
         ports:

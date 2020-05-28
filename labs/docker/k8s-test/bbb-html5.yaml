@@ -29,13 +29,13 @@ spec:
         - name: MONGO_URL
           value: mongodb://mongo:27017/html5client
         - name: MONGO_DB
-          value: bbbhtml5
+          value: html5client
         - name: METEOR_SETTINGS_MODIFIER
           value: ".public.kurento.wsUrl = \"wss://bigbluebutton.rocket.chat/bbb-webrtc-sfu\" | .public.kurento.enableVideo = true | .public.kurento.enableScreensharing = true | .public.kurento.enableVideoStats = true | .public.kurento.enableListenOnly = true"
         - name: REDIS_HOST
           value: redis
         - name: ROOT_URL
-          value: http://127.0.0.1/html5client
+          value: https://hadtech3b.gq/html5client
         image: hoang000147/bbb-html5:latest
         imagePullPolicy: Always
         name: bbb-html5

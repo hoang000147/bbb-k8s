@@ -6,7 +6,7 @@ metadata:
 spec:
   host: hadtech3b.gq
   tls:
-    secret: bbb-secret-customer
+    secret: hadtec3b
 #    enable: false
   upstreams:
   - name: greenlight
